@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrap">
     <div class="title">
-      欢迎使用台球+后台管理系统
+      欢迎使用台球+(客户版)后台管理系统
     </div>
   </div>
 </template>

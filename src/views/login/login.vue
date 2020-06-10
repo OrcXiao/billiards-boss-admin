@@ -2,7 +2,7 @@
   <div class="login-wrap dis-fl ju-ct al-ct wd100 hg100">
     <div class="login-box bo-r6 pd20">
       <div class="te-ct fs18 ft-b pd-b20">
-        台球+后台管理系统
+        台球+( 客户版 )后台管理系统
       </div>
       <!--      <el-tabs v-model="activeName" @tab-click="handleClick">-->
       <!--        <el-tab-pane label="登 录" name="1">-->

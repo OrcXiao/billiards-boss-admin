@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header-wrap">
         <div class="header-box dis-fl ju-sb fs22 clffffff hg100">
-          <div @click="$router.push('/admin')" class="cu-pt">台球+ 后台管理系统</div>
+          <div @click="$router.push('/admin')" class="cu-pt">台球+ (客户版) 后台管理系统</div>
           <div>
             <el-dropdown @command="handleCommand" trigger="click" class="cu-pt">
               <span class="clffffff">
@@ -12,7 +12,6 @@
                   <i class="fs16 mg-l10 el-icon-arrow-down"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="register">注册账号</el-dropdown-item>
                 <el-dropdown-item command="logout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -25,38 +24,19 @@
                   router
                   :default-active="defaultActive"
                   class="el-menu-vertical-demo">
-            <el-menu-item index="/information">
-              <i class="el-icon-menu"></i>
-              <span slot="title">资讯管理</span>
-            </el-menu-item>
-            <el-menu-item index="/signature">
-              <i class="el-icon-document"></i>
-              <span slot="title">签表管理</span>
-            </el-menu-item>
-            <el-menu-item index="/course">
-              <i class="el-icon-picture-outline"></i>
-              <span slot="title">教程管理</span>
-            </el-menu-item>
-            <!--            <el-menu-item index="/appoint">-->
-            <!--              <i class="el-icon-help"></i>-->
-            <!--              <span slot="title">约球管理</span>-->
-            <!--            </el-menu-item>-->
-            <el-menu-item index="/room">
+            <el-menu-item index="/roomInfo">
               <i class="el-icon-s-home"></i>
-              <span slot="title">球房管理</span>
+              <span slot="title">球房信息</span>
             </el-menu-item>
-            <el-menu-item index="/game">
-              <i class="el-icon-date"></i>
-              <span slot="title">赛讯管理</span>
+            <el-menu-item index="/activity">
+              <i class="el-icon-s-help"></i>
+              <span slot="title">活动管理</span>
             </el-menu-item>
-            <!--            <el-menu-item index="/user">-->
-            <!--              <i class="el-icon-s-custom"></i>-->
-            <!--              <span slot="title">用户管理</span>-->
-            <!--            </el-menu-item>-->
-            <!--            <el-menu-item index="/banner">-->
-            <!--              <i class="el-icon-c-scale-to-original"></i>-->
-            <!--              <span slot="title">banner管理</span>-->
-            <!--            </el-menu-item>-->
+            <el-menu-item index="/personnel">
+              <i class="el-icon-user-solid"></i>
+              <span slot="title">人员管理</span>
+            </el-menu-item>
+
           </el-menu>
         </el-aside>
         <el-main class="main-wrap" v-loading="Mixin_loading" element-loading-background="rgba(255, 255, 255, 0.9)">

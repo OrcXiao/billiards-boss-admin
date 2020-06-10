@@ -19,66 +19,23 @@ const routes = [
                 path: '',
                 name: 'home',
                 component: () => import('../views/home/home.vue'),
+            },
+            {
+                path: '/roomInfo',
+                name: 'roomInfo',
+                component: () => import('../views/roomInfo/roomInfo.vue'),
+            },
+            {
+                path: '/activity',
+                name: 'activity',
+                component: () => import('../views/activity/activity.vue'),
+            },
+            {
+                path: '/personnel',
+                name: 'personnel',
+                component: () => import('../views/personnel/personnel.vue'),
+            },
 
-            },
-            {
-                path: '/register',
-                name: 'register',
-                component: () => import('../views/register/register.vue'),
-
-            },
-            {
-                path: '/information',
-                name: 'information',
-                component: () => import('../views/information/information.vue'),
-
-            },
-            {
-                path: '/signature',
-                name: 'signature',
-                component: () => import('../views/signature/signature.vue'),
-
-            },
-            {
-                path: '/course',
-                name: 'course',
-                component: () => import('../views/course/course.vue'),
-
-            },
-            {
-                path: '/appoint',
-                name: 'appoint',
-                component: () => import('../views/appoint/appoint.vue'),
-
-            },
-            {
-                path: '/room',
-                name: 'room',
-                component: () => import('../views/room/room.vue'),
-
-            },
-            {
-                path: '/game',
-                name: 'game',
-                component: () => import('../views/game/game.vue'),
-            },
-            {
-                path: '/gameManage',
-                name: 'game',
-                component: () => import('../views/game/gameManage.vue'),
-            },
-            {
-                path: '/user',
-                name: 'user',
-                component: () => import('../views/user/user.vue'),
-
-            },
-            {
-                path: '/banner',
-                name: 'banner',
-                component: () => import('../views/banner/banner.vue'),
-
-            },
         ]
     },
     {
