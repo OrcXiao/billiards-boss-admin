@@ -36,7 +36,18 @@
               <i class="el-icon-user-solid"></i>
               <span slot="title">人员管理</span>
             </el-menu-item>
-
+            <el-menu-item index="/game">
+              <i class="el-icon-s-flag"></i>
+              <span slot="title">赛事管理</span>
+            </el-menu-item>
+<!--            <el-menu-item index="/performance">-->
+<!--              <i class="el-icon-finished"></i>-->
+<!--              <span slot="title">成绩管理</span>-->
+<!--            </el-menu-item>-->
+<!--            <el-menu-item index="/level">-->
+<!--              <i class="el-icon-collection-tag"></i>-->
+<!--              <span slot="title">等级管理</span>-->
+<!--            </el-menu-item>-->
           </el-menu>
         </el-aside>
         <el-main class="main-wrap" v-loading="Mixin_loading" element-loading-background="rgba(255, 255, 255, 0.9)">

@@ -116,23 +116,24 @@
       //点击登录
       submitLogin(formName) {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.btnLoginState = true;
-            let params = {
-              account: this.login.user,
-              password: this.login.password,
-              randcheckcode: this.login.authCode,
-            };
-            this.$api.login.selectUser(params).then(res => {
-              this.btnLoginState = false;
-              this.getAuthCode();
-              if (res.data.resultCode === 0) {
-                localStorage.setItem('userLoginLog', this.login.user + new Date().getTime() + '');
-                this.$message.success('登录成功');
-                this.$router.push('/admin');
-              }
-            });
-          }
+          this.$router.push('/admin');
+          // if (valid) {
+          //   this.btnLoginState = true;
+          //   let params = {
+          //     account: this.login.user,
+          //     password: this.login.password,
+          //     randcheckcode: this.login.authCode,
+          //   };
+          //   this.$api.login.selectUser(params).then(res => {
+          //     this.btnLoginState = false;
+          //     this.getAuthCode();
+          //     if (res.data.resultCode === 0) {
+          //       localStorage.setItem('userLoginLog', this.login.user + new Date().getTime() + '');
+          //       this.$message.success('登录成功');
+          //       this.$router.push('/admin');
+          //     }
+          //   });
+          // }
         });
       },
       //点击注册
