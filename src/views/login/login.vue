@@ -156,7 +156,7 @@
 <style lang="scss" scoped>
   .login-wrap {
     background: url("../../assets/img/login-bg.jpg") no-repeat;
-
+    background-size: cover;
     & > .login-box {
       width: 300px;
       height: auto;

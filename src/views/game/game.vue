@@ -245,60 +245,31 @@
       title="赛事成绩"
       :visible.sync="isShowPerformanceDialog"
       @close="Mixin_dialogClose('performance', 'isShowPerformanceDialog')"
-      width="700px">
-      <el-form ref="performance" :model="performance" :rules="performanceRules" label-width="140px">
-        <el-form-item label="冠军 :" prop="oneWinner">
-          <el-select v-model="performance.oneWinner" placeholder="请选择">
-            <el-option
-              v-for="item in personOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="亚军 :" prop="twoWinner">
-          <el-select v-model="performance.twoWinner" placeholder="请选择">
-            <el-option
-              v-for="item in personOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="季军 :" prop="thirdWinner">
-          <el-select v-model="performance.thirdWinner" placeholder="请选择">
-            <el-option
-              v-for="item in personOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="8强 :" prop="Final8">
-          <el-select multiple v-model="performance.Final8" placeholder="请选择">
-            <el-option
-              v-for="item in personOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="16强 :" prop="Final16">
-          <el-select multiple v-model="performance.Final16" placeholder="请选择">
-            <el-option
-              v-for="item in personOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div class="mt10 dis-fl ju-ct">
+      width="1200px">
+      <div class="column-title dis-fl">
+        <div
+          class="column-title-item"
+          v-for="(item, index) in columnNum"
+          :key="item">
+          第{{item}}轮
+        </div>
+      </div>
+      <div class="show-wrap dis-fl">
+        <div
+          class="column"
+          v-for="(item, index) in columnNum"
+          :key="item">
+          <div
+            v-if="itemIn.lieIndex.includes(index)"
+            v-for="(itemIn, indexIn) in testData"
+            :key="indexIn"
+            class="column-item"
+            :class="'column' + (index+1)">
+            {{itemIn.name}}
+          </div>
+        </div>
+      </div>
+      <div class="mg-t20 dis-fl ju-ct">
         <el-button type="primary" @click="submitPerformanceBtn('performance')">确定</el-button>
         <el-button @click="isShowPerformanceDialog = false">取消</el-button>
       </div>
@@ -539,61 +510,50 @@
         detail: "",
         submitButtonLoading: false,
         //是否显示成绩的弹框
-        isShowPerformanceDialog: false,
-        //成绩
-        performance: {
-          //冠军
-          oneWinner: '',
-          //亚军
-          twoWinner: '',
-          //季军
-          thirdWinner: '',
-          //8强
-          Final8: '',
-          //16强
-          Final16: '',
-        },
-        //所有的才赛人员
-        personOptions: [],
-        //已经选择的比赛人员
-        selectedPerson: [],
-        performanceRules: {
-          oneWinner: [
-            {
-              required: true,
-              validator: this.$verifys.nullStr({item: '冠军不能为空'}),
-              trigger: 'blur'
-            },
-          ],
-          twoWinner: [
-            {
-              required: true,
-              validator: this.$verifys.nullStr({item: '亚军'}),
-              trigger: 'blur'
-            },
-          ],
-          thirdWinner: [
-            {
-              required: true,
-              validator: this.$verifys.nullStr({item: '季军'}),
-              trigger: 'blur'
-            },
-          ],
-          Final8: [
-            {
-              required: true,
-              validator: validateFinal8,
-              trigger: 'blur'
-            },
-          ],
-          Final16: [
-            {
-              required: true,
-              validator: validateFinal16,
-              trigger: 'blur'
-            },
-          ],
-        }
+        isShowPerformanceDialog: true,
+
+        /*
+        * 比赛报名成绩
+        * */
+        //测试数据
+        testData: [
+          {
+            name: 'A',
+            lieIndex: [0, 1, 2]
+          },
+          {
+            name: 'B',
+            lieIndex: [0]
+          },
+          {
+            name: 'C',
+            lieIndex: [0]
+          },
+          {
+            name: 'D',
+            lieIndex: [0, 1,]
+          },
+          {
+            name: 'E',
+            lieIndex: []
+          },
+          {
+            name: 'F',
+            lieIndex: [0]
+          },
+          {
+            name: 'G',
+            lieIndex: [0]
+          },
+          {
+            name: 'H',
+            lieIndex: [0, 1,]
+          },
+        ],
+        //列数
+        columnNum: 0,
+        renderData: {},
+
       }
     },
     computed: {
@@ -606,12 +566,17 @@
     mounted() {
       this.$nextTick(() => {
         this.initData();
-        for (let i = 0; i < 20; i++) {
-          this.personOptions.push({name: `选手${i + 1}`, id: i + 1})
-        }
+        this.getColumnNum(this.testData);
+
       })
     },
     methods: {
+      //根据比赛选手, 确定列数
+      getColumnNum(arr) {
+        arr.forEach((item, index) => {
+          this.columnNum = (item.lieIndex.length > this.columnNum ? item.lieIndex.length : this.columnNum);
+        });
+      },
       //获取数据
       initData() {
         let params = {
@@ -889,5 +854,29 @@
 </script>
 
 <style lang="scss" scoped>
+  .column-title {
+    & > .column-title-item {
+      flex: 1;
+    }
+  }
 
+  .show-wrap {
+    width: 100%;
+    overflow-x: auto;
+    & > .column {
+      min-width: 200px;
+      border: 1px solid #EBEEF5;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      & > .column-item {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #EBEEF5;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
 </style>

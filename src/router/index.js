@@ -40,16 +40,6 @@ const routes = [
         name: 'game',
         component: () => import('../views/game/game.vue'),
       },
-      {
-        path: '/performance',
-        name: 'performance',
-        component: () => import('../views/performance/performance.vue'),
-      },
-      {
-        path: '/level',
-        name: 'level',
-        component: () => import('../views/level/level.vue'),
-      },
     ]
   },
   {

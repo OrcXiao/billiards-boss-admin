@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header-wrap">
         <div class="header-box dis-fl ju-sb fs22 clffffff hg100">
-          <div @click="$router.push('/admin')" class="cu-pt">台球+ (客户版) 后台管理系统</div>
+          <div @click="$router.push('/admin')" class="cu-pt">台球+ (球房使用版) 后台管理系统</div>
           <div>
             <el-dropdown @command="handleCommand" trigger="click" class="cu-pt">
               <span class="clffffff">
