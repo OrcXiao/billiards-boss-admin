@@ -1,5 +1,5 @@
 import axios from './index';
-
+import Vue from 'vue'
 
 const api = {
   uploadUrl: axios.defaults.baseURL + '/oss/upload',
@@ -14,11 +14,11 @@ const api = {
   login: {
     //获取登陆验证码
     getCode(params) {
-      return axios.get('/user/getCode', {params, responseType: "arraybuffer"},)
+      return axios.get('/user/getCode', { params, responseType: "arraybuffer" })
     },
     //退出登陆
     logout(params) {
-      return axios.get('/user/logout', {params})
+      return axios.get('/user/logout', { params })
     },
     //注册用户
     register(params) {
@@ -33,7 +33,7 @@ const api = {
   information: {
     //通过条件查询资讯分页数据
     getInfoList(params) {
-      return axios.get("/informationDO/getInformations", {params})
+      return axios.get("/informationDO/getInformations", { params })
     },
     //新增资讯(修改)
     addInformation(params) {
@@ -68,7 +68,7 @@ const api = {
     },
     // 通过条件查询签表分页数据
     getSignForms(params) {
-      return axios.get('/signFormDO/getSignForms', {params})
+      return axios.get('/signFormDO/getSignForms', { params })
     },
     //禁用/启用
     updateShow(params) {
@@ -99,7 +99,7 @@ const api = {
     },
     // 通过条件查询赛事分页数据
     getContests(params) {
-      return axios.get('/contestDO/getContests', {params})
+      return axios.get('/contestDO/getContests', { params })
     },
     //禁用/启用
     updateShow(params) {
@@ -111,11 +111,15 @@ const api = {
     },
     //比赛人员详情列表
     contestDetail(params) {
-      return axios.get('/contestDO/contestDetail', {params})
+      return axios.get('/contestDO/contestDetail', { params })
     },
     // 设置排名和奖金
     setRanking(params) {
       return axios.post('/contestDO/setRanking', params)
+    },
+    // 根据比赛id自动抽签
+    getDrawResult(params) {
+      return axios.get('/enrollDO/getDrawResult/' + params)
     },
 
   },
@@ -135,7 +139,7 @@ const api = {
     },
     //通过条件查询球房分页数据
     getRooms(params) {
-      return axios.get('/roomDO/getRooms', {params})
+      return axios.get('/roomDO/getRooms', { params })
     },
   },
   //教程
@@ -154,12 +158,20 @@ const api = {
     },
     // 通过条件查询教程分页数据
     getCourses(params) {
-      return axios.get('/courseDO/getCourses', {params})
+      return axios.get('/courseDO/getCourses', { params })
     },
     //禁用/启用
     updateShow(params) {
       return axios.put('/courseDO/updateShow?id=' + params)
     },
+  },
+
+  //TiYi
+  //WebSocket
+  socket: {
+    login(params) {
+      Vue.prototype.WebInstance.SendMsg("AdminLogin_CG", params)
+    }
   }
 
 };

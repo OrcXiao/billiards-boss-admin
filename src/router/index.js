@@ -57,22 +57,22 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-// router.beforeEach((to, from, next) => {
-// store.commit('SET_LOADING_STATE', true);
-// if (to.path === '/') {
-//   next()
-// }
-// else {
-//   let info = localStorage.getItem('userLoginLog');
-//   if (info) {
-//     next()
-//   }
-//   else {
-//     next({
-//       path: '/'
-//     })
-//   }
-// }
-
-// });
+router.beforeEach((to, from, next) => {
+  store.commit('SET_LOADING_STATE', true);
+  if (to.path === '/') {
+    next()
+  } else {
+    //TiYi
+    //let info = localStorage.getItem('userLoginLog');
+    let bLogin = Vue.prototype.Account != null && Vue.prototype.Account.length !== 0
+    console.log("check has login: ", bLogin)
+    if (!bLogin) {
+      next()
+    } else {
+      next({
+        path: '/'
+      })
+    }
+  }
+});
 export default router

@@ -14,6 +14,8 @@ import axios from './axios'
 import api from './axios/api';
 //引入过滤器
 import filters from './filters';
+//引入websocket TiYi
+import CWebSocket from './proto/WebSocketUtils'
 
 for (let item in filters) {
     Vue.filter(item, filters[item])
@@ -35,6 +37,9 @@ const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 };
+
+//初始化 TiYi
+Vue.prototype.WebInstance = new CWebSocket(axios.defaults.baseWeb)
 
 Vue.config.productionTip = false;
 new Vue({

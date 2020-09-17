@@ -510,7 +510,7 @@
         detail: "",
         submitButtonLoading: false,
         //是否显示成绩的弹框
-        isShowPerformanceDialog: true,
+        isShowPerformanceDialog: false,
 
         /*
         * 比赛报名成绩
