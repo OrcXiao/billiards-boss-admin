@@ -49,7 +49,6 @@ const routes = [
       title: '404未找到'
     }
   },
-
 ];
 
 const router = new VueRouter({

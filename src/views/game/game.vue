@@ -134,6 +134,15 @@
         <el-form-item label="比赛球房id :" prop="playRoom">
           <el-input placeholder="请输入比赛球房id" v-model.trim="info.playRoom"></el-input>
         </el-form-item>
+        <el-form-item label="抽签时间 :" prop="drawTime">
+          <el-date-picker
+            value-format="timestamp"
+            class="wd100"
+            v-model="info.drawTime"
+            type="datetime"
+            placeholder="选择抽签时间">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item label="比赛时间 :" prop="playTime">
           <el-date-picker
             value-format="timestamp"
@@ -337,6 +346,8 @@
           money: '',
           //比赛球房id
           playRoom: '',
+          //抽签时间
+          drawTime: '',
           //比赛时间
           playTime: '',
           //比赛开始时间
@@ -404,6 +415,13 @@
             {
               required: true,
               validator: this.$verifys.nullStr({item: '比赛球房id'}),
+              trigger: 'blur'
+            },
+          ],
+          drawTime: [
+            {
+              required: true,
+              validator: this.$verifys.nullStr({item: '抽签时间'}),
               trigger: 'blur'
             },
           ],
@@ -621,6 +639,8 @@
           money: '',
           //比赛球房id
           playRoom: '',
+          //抽签时间
+          drawTime: '',
           //比赛时间
           playTime: '',
           //比赛开始时间
@@ -659,6 +679,7 @@
             this.info.peopleNumber = data.peopleNumber;
             this.info.playDays = data.playDays;
             this.info.playRoom = data.playRoom;
+            this.info.drawTime = data.drawTime;
             this.info.playTime = data.playTime;
             this.info.playTimeStart = data.playTimeStart;
             this.info.playTimeStop = data.playTimeStop;
@@ -717,6 +738,7 @@
               params.peopleNumber = this.info.peopleNumber;
               params.playDays = this.info.playDays;
               params.playRoom = this.info.playRoom;
+              params.drawTime = this.info.drawTime;
               params.playTime = this.info.playTime;
               params.playTimeStart = this.info.playTimeStart;
               params.playTimeStop = this.info.playTimeStop;
@@ -747,6 +769,7 @@
               params.peopleNumber = this.info.peopleNumber;
               params.playDays = this.info.playDays;
               params.playRoom = this.info.playRoom;
+              params.drawTime = this.info.drawTime;
               params.playTime = this.info.playTime;
               params.playTimeStart = this.info.playTimeStart;
               params.playTimeStop = this.info.playTimeStop;

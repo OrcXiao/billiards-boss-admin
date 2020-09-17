@@ -1,0 +1,596 @@
+//Version: 1.51
+//Generate Time: Tue Sep  8 21:41:52 2020
+//TiYi: DO NOT EDIT.
+syntax = "proto3";
+package pb;
+
+//Message Code Generate By TiYi
+enum EC_Code
+{
+    EC_None = 0;
+    EC_HeartCheck_GC = 20000;
+    EC_MsgNotify_GC = 20001;
+    EC_WXLoginRegister_CG = 20002;
+    EC_WXLoginByOpenID_CG = 20003;
+    EC_WXSession_GC = 20004;
+    EC_UserAddInfo_CG = 20005;
+    EC_UserAddInfo_GC = 20006;
+    EC_WXPhoneDataDecodeBind_CG = 20007;
+    EC_WXPhoneDataDecodeBindResult_GC = 20008;
+    EC_WXUserInfoSet_CG = 20009;
+    EC_WXUserInfoSetResult_GC = 20010;
+    EC_FetchMapStoreName_CG = 20011;
+    EC_MapStoreNameResult_GC = 20012;
+    EC_FetchMapStoreDetail_CG = 20013;
+    EC_MapStoreDetailInfo_GC = 20014;
+    EC_FtechMapStoreUpdate_CG = 20015;
+    EC_MapStoreUpdate_GC = 20016;
+    EC_FetchAnnouncementDetailInfo_CG = 20017;
+    EC_FetchAnnouncementDetailInfoResult_GC = 20018;
+    EC_FetchAnnouncementInfos_CG = 20019;
+    EC_AnnouncementInfos_GC = 20020;
+    EC_FetchAllClientSignforms_CG = 20021;
+    EC_FetchAllClientSignformsResult_GC = 20022;
+    EC_FetchSignformDetailInfo_CG = 20023;
+    EC_FetchSignformDetailInfoDetail_GC = 20024;
+    EC_FetchAllValidContestInfo_CG = 20025;
+    EC_FetchAllValidContestInfoResult_GC = 20026;
+    EC_FetchContestDetailInfo_CG = 20027;
+    EC_FetchContestDetailInfoResult_GC = 20028;
+    EC_EnrollContest_CG = 20029;
+    EC_EnrollContest_GC = 20030;
+    EC_FetchAllClientEnrollUser_CG = 20031;
+    EC_FetchAllClientEnrollUserResult_GC = 20032;
+    EC_FetchUserMatchRecords_CG = 20033;
+    EC_FetchUserMatchRecordsResult_GC = 20034;
+    EC_UserDrawMatch_CG = 20035;
+    EC_UserDrawMatchResult_GC = 20036;
+    EC_UserCreateABallGame_CG = 20037;
+    EC_UserCreateABallGameResult_GC = 20038;
+    EC_FetchAboutBallGames_CG = 20039;
+    EC_FetchUserAboutBallGamesResult_GC = 20040;
+    EC_JoinAboutBallGame_CG = 20041;
+    EC_JoinAboutBallGameResult_GC = 20042;
+    EC_UserKickBallGame_CG = 20043;
+    EC_UserKickBallGameResult_GC = 20044;
+    EC_UserPostGameResult_CG = 20045;
+    EC_UserPostGameResult_GC = 20046;
+    EC_BallRankRequest_CG = 20047;
+    EC_BallRankResult_GC = 20048;
+    EC_FetchBallGameRooms_CG = 20049;
+    EC_FetchBallGameRoomsResult_GC = 20050;
+    EC_AdminLogin_CG = 20051;
+    EC_AdminLoginResult_GC = 20052;
+}
+//Message Code Generate By TiYi End
+
+
+message HeartCheck_GC
+{
+}
+message ErrorResult 
+{
+	int32 errCode = 1; //0成功 1失败 
+	string errMsg = 3;//错误信息
+}
+//需要全局监听 弹窗提醒玩家就行 在线的话
+message MsgNotify_GC
+{
+	int32 msgType = 1;
+	string notifyMsg = 2;
+}
+message WXUserInfo
+{
+	string AvatarUrl =1;
+	string City = 2;
+	string Country = 3;
+	int32 Gender = 4;
+	string NickName = 5;
+	string Province = 6;
+	string OpenId = 7;
+	string SessionKey = 8;
+	string Token = 9;
+	string Phone = 10;
+	int32 Age = 11;
+	int32 UserLevel = 12;
+	uint32 UID = 13;
+	string Address = 14;
+	string UserName = 15;
+	string OftenRoom = 16;
+}
+message WXLoginRegister_CG
+{
+	WXUserInfo registerUser = 1;
+}
+message WXLoginByOpenID_CG
+{
+	string OpenId = 1;
+	string SessionKey = 2;
+}
+message WXSession_GC
+{
+	int32 status = 1;//登录状态  0 成功  1错误
+	WXUserInfo info = 2;
+}
+//拉取玩家更多信息
+message UserAddInfo_CG
+{
+	uint32 uuid = 1;
+}
+message UserAddInfo_GC
+{
+	int32 level = 1;
+	int32 bills = 2;//积分
+	int32 createBallGames = 3;//创建的约球局数量
+	int32 joinBallGames = 4;//加入的约球局数量
+	int32 winCreate = 5;//创建的约球局赢数量
+	int32 winJoin = 6;//加入的约球局赢数量
+}
+//解析微信加密的电话
+message WXPhoneDataDecodeBind_CG
+{
+	string SessionKey = 1;
+	string Data = 2;
+	string IV = 3;
+	int32 Code = 4;
+}
+message WXPhoneDataDecodeBindResult_GC
+{
+	bool bindStatus = 1;
+	string phoneNumber = 2;
+}
+message WXUserInfoSet_CG
+{
+	uint32 UID = 1;
+	string Address = 2;
+	int32 Age = 3;
+	string UserName = 4;
+	string oftenRoom = 5;
+	string Phone = 6;
+}
+message WXUserInfoSetResult_GC
+{
+	bool Status = 1;// 0成功 1失败
+}
+message MapStoreInfo
+{
+  int32 id = 1;
+  string name = 2;      //'球房名称',
+  string facilities = 3;// '球房设备情况',
+  float longitude = 4; //'球房经度',
+  float latitude = 5; //'球房纬度',
+  string charging_rules = 6; //'球房收费规则',
+  string province = 7;// '省',
+  string city = 8; //'市',
+  string area = 9; //'区',
+  string address = 10; //'球房地址',
+  string activity = 11; //'球房活动',
+  string img_one = 12; //'球房图片1',
+  string img_two = 13;// '球房图片2',
+  string img_three = 14; //'球房图片3',
+  string img_four = 15; //'球房图片4',
+  string img_five = 16;//'球房图片5',
+  string img_six = 17; //'球房图片6',
+  int32 version = 18; //'版本号，用于乐观锁处理',
+  int32 del_flag = 19; //'是否删除(0:未删除,1:已删除)',
+  string create_by = 20;//'创建人',
+  string create_date = 21; //'创建时间',
+  string update_by = 22; //'修改人',
+  string update_date = 23; //'修改时间',
+  string uid = 24; //'球房id_爬取数据',
+}
+//抓取地图球馆名称
+message ClientMapStoreInfo
+{
+	int32 id = 1;
+	string name = 2;
+	float longitude = 3;
+	float latitude = 4;
+}
+message FetchMapStoreName_CG
+{
+}
+message MapStoreNameResult_GC
+{
+	repeated ClientMapStoreInfo info= 1;
+	int32 version = 2;  //前端资源信息版本 
+}
+message FetchMapStoreDetail_CG
+{
+	int32 id = 1;
+}
+message MapStoreDetailInfo_GC
+{
+	MapStoreInfo info = 1;
+}
+//地图数据更新
+message FtechMapStoreUpdate_CG
+{
+	int32 version = 1;  //前端资源信息版本
+}
+message MapStoreUpdate_GC
+{
+	repeated ClientMapStoreInfo updates = 1;//有更新的
+	repeated ClientMapStoreInfo newadds = 2; //新增的
+	repeated ClientMapStoreInfo deletes = 3;  //移除的
+	int32 version = 4;  //新的地图资源信息版本
+	int32 time = 5; //这个版本时间
+}
+//公告详情
+message AnnouncementInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string context = 3;
+	string imgurl = 4;
+	int32 type = 5;
+	int32 readnumber = 6;
+	int32 praisenumber = 7;
+	int32 showflag = 8;
+	int32 delflag = 9;
+	string createBy = 10;
+	string updateBy = 11;
+}
+message ClientAnnouncementInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string imgurl = 3;
+	int32 readnumber = 4;
+	int32 praisenumber = 5;
+}
+message FetchAnnouncementDetailInfo_CG
+{
+	uint32 id = 1;
+}
+message FetchAnnouncementDetailInfoResult_GC
+{
+	AnnouncementInfo info = 1;
+}
+message FetchAnnouncementInfos_CG
+{
+	int32 currentpage = 1;//从当前页数开始拉取 5条
+}
+message AnnouncementInfos_GC
+{
+	int32 currentpage = 1;
+	repeated ClientAnnouncementInfo info = 2;
+}
+//签表详情
+message SignformDetailInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string context = 3;
+	string imgurl = 4;
+	int32 showflag = 5;
+	int32 delflag = 6;
+	string createby = 7;
+	string updateby = 8;
+	string imgone = 9;
+	string imgtwo = 10;
+	string imgthree =11;
+	string imgfour = 12;
+}
+message ClientSignform
+{
+	uint32 id = 1;
+	string title = 2;
+	string imgurl = 3;
+}
+//拉取全部的签表信息
+message FetchAllClientSignforms_CG
+{
+	int32 currentpage = 1;//从当前页数开始拉取 5条
+}
+message FetchAllClientSignformsResult_GC
+{
+	int32 currentpage = 1;
+	repeated ClientSignform info = 2;
+}
+message FetchSignformDetailInfo_CG
+{
+	uint32 id = 1;
+}
+message FetchSignformDetailInfoDetail_GC
+{
+	SignformDetailInfo info = 1;
+}
+//比赛详情
+message ContestDetailInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string text = 3;
+	string imgurl = 4;
+	int32 peopleNumber = 5;
+	int32 money = 6;
+	int32 state = 7;
+	int32 fabulousNumber = 8;
+	string province = 9;
+	string city = 10;
+	string area = 11;
+	string address = 12;
+	string playTime = 13;
+	string playRoom = 14;
+	int32 showflag = 15;
+	int32 delflag = 16;
+	int32 enrollMoney = 17;
+	int32 playDays = 18;
+	string playStartTime = 19;
+	string playEndTime =20;
+}
+message ClientContestInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string imgurl = 3;
+	int32 enrollMoney = 4;
+	int32 state= 5;
+	string address = 6;
+	int32 playDays = 7;
+	int32 peopleNumber =8;
+	int32 money = 9;
+	string playTimeStart = 10;
+	string playTimeStop = 11;
+	int32 penpleCount = 12;
+}
+//抓取比赛大纲信息
+message FetchAllValidContestInfo_CG
+{
+	int32 currentpage  =1;
+}
+message FetchAllValidContestInfoResult_GC
+{
+	int32 currentpage = 1;
+	repeated ClientContestInfo info = 2;
+}
+message FetchContestDetailInfo_CG
+{
+	uint32 id = 1;
+}
+message FetchContestDetailInfoResult_GC
+{
+	ContestDetailInfo info = 1;
+}
+message EnrollUserDetailInfo
+{
+	uint32 id = 1;
+	uint32 uuid = 2;
+	uint32 contestId = 3;
+	string userName = 4;
+	string userPhone = 5;
+	int32 drawResult = 6;//抽签结果
+	bool canDraw = 7;//是否参与抽签
+	int32 billMoney = 8;//订单金额
+	string ranking = 9; //比赛名次
+	int32 money = 10; //比赛奖金
+	string createTime = 11;
+}
+message ClientEnrollUserInfo
+{
+	uint32 id = 1;
+	int32 drawResult = 2;//抽签结果
+	string userName = 3;
+	string createTime = 4;
+	uint32 uuid = 5;
+	int32 zuIndex = 6; //所处的比赛组
+	repeated int32 lieIndexs= 7;
+}
+//报名比赛
+message EnrollContest_CG
+{
+	int32 billMoney = 1;
+	uint32 contestId = 2;
+	uint32 uuid = 3;
+	string note = 4;
+}
+message EnrollContest_GC
+{
+	int32 errCode = 1; 
+	string appId = 2;
+	string nonceStr = 3;
+	string package = 4;
+	string signType = 5;
+	string timeStamp = 6;
+	string paySign = 7;
+	string errString = 8;
+}
+//教程页
+message CourceDetailInfo
+{
+	uint32 id = 1;
+	string title = 2;
+	string context = 3;
+	string videourl = 4;
+	string imgurl = 5;
+	string author = 6;
+	int32 showflag = 7;
+	int32 delflag = 8;
+}
+//抓取比赛报名数据
+message FetchAllClientEnrollUser_CG
+{
+	uint32 contestId = 1;
+}
+message FetchAllClientEnrollUserResult_GC
+{
+	repeated ClientEnrollUserInfo info = 1;
+}
+//抓取比赛记录  //todo 每次都是从数据库中拉取的
+message UserMatchRecords
+{
+	string title = 1;
+	string address = 2;
+	string ranking = 3;
+	int32 money = 4;
+	string imgUrl = 5;
+}
+message FetchUserMatchRecords_CG
+{
+	uint32 uuid = 1;
+}
+message FetchUserMatchRecordsResult_GC
+{
+	repeated UserMatchRecords info = 1;
+}
+//抽签
+message UserDrawMatch_CG
+{
+	uint32 contestId = 1;
+}
+message UserDrawMatchResult_GC
+{
+	int32 resultCode = 1;//0成功
+	string resultData = 2;
+}
+/*********************************************************约球*******************************************************************/
+enum AboutBallGameLevel
+{
+	Invalid = 0;
+	NormalLevel = 1;//普通场
+	DiamondLevel = 2;//钻石场
+}
+message AboutBallContent
+{
+	string ballId = 1;
+	string title = 2;
+	string context = 3;
+	int32 timePlay = 4;//比赛时间
+	int32 roomId = 5;//球房Id
+	string roomPlayAddress = 6;//比赛详细地址
+	int32 playRound = 7;//比赛局数
+	AboutBallGameLevel level = 8;
+	uint32 createUID = 9;//发起人ID
+	string createUserName = 10;//发起人名字
+	string createUserPhone = 11;//发起人联系电话
+	uint32 joinUID = 12;//应约人ID
+	string joinUserName = 13;//应约人
+	string joinUserPhone = 14;//应约人电话
+	int32 status = 15;//0发起中 1等待开赛  2等待结果中 3完成
+	string img_one = 16;
+	int32 difen = 17;
+}
+message EndAboutBallContent
+{
+	AboutBallContent info = 1;
+	uint32 winId = 2; //赢的人
+	uint32 firstPostId = 3;
+	uint32 secondPostId = 4;
+	uint32 firstPostTime = 5;
+	uint32 secondPostTime = 6;
+	bool bTimeAutoPost = 7;
+	int32 bill = 8;//积分
+}
+//创建约球局
+message UserCreateABallGame_CG
+{
+	string title = 1;
+	string context = 2;
+	int32 timePlay = 3;//比赛时间
+	int32 roomId = 4;//球房Id
+	string roomPlayAddress = 5;//比赛详细地址
+	int32 playRound = 6;//比赛局数
+	AboutBallGameLevel level = 7;
+	string createUserName = 8;//发起人名字
+	string createUserPhone = 9;//发起人联系电话
+	int32 difen = 10;
+}
+//创建结果
+message UserCreateABallGameResult_GC
+{
+	string ballGameId = 1;//约球赛唯一Id
+}
+message FetchAboutBallGames_CG
+{
+//1个人发起的  2个人参与的  3所有的  4比赛等待开始的 5个人等待结果中 6完成的  7获取推荐的（todo） 8获取某一球房的  除了3都是必须自己才能看的  必须登陆3可以不登录
+	int32 status = 1;
+	int32 page = 2;
+	int32 pageNum = 3;
+	int32 roomId = 4;//8获取某一球房的
+}
+message FetchUserAboutBallGamesResult_GC
+{
+	repeated AboutBallContent info = 1;
+	repeated EndAboutBallContent endInfo = 2;
+	int32 status = 3;
+}
+//玩家加入约球赛
+message JoinAboutBallGame_CG
+{
+	string ballId = 1;
+	string joinUserName = 2;
+	string joinUserPhone = 3;
+}
+message JoinAboutBallGameResult_GC
+{
+	string ballGameId = 1;//约球赛唯一Id
+}
+//取消约球局 删除或则退出
+message UserKickBallGame_CG
+{
+	string ballGameId = 1;
+	bool deleteGame = 2; //删除比赛 (创建人使用 true删除比赛  false踢开约球的人重新等待约球)
+}
+//取消约球局结果
+message UserKickBallGameResult_GC
+{
+	string ballGameId = 1;//约球赛唯一Id
+}
+//发起约球结果审核 1方发起等待1天最多  等待对方确定  都一致完成比赛 否则重新发起审核
+message UserPostGameResult_CG
+{
+	string ballGameId = 1;
+	uint32 winId = 2;
+}
+message UserPostGameResult_GC
+{
+	string ballGameId = 1;//约球赛唯一Id
+}
+//登陆请求一次就行了吧 不需要每次都请求  不会变的  排行榜为空才请求  一次就好 基本不变 凌晨5点刷新排行榜
+message BallRankRequest_CG
+{
+}
+message BallRank
+{
+	uint32 uuid = 1;
+	string nickName = 2;
+	int32 bill = 3;//积分
+	string headurl = 4;
+}
+message BallRankResult_GC
+{
+	repeated BallRank info = 1;
+}
+//拉取全部的有约球的房间
+message FetchBallGameRooms_CG
+{
+}
+message FetchBallGameRoomsResult_GC
+{
+	repeated int32 RoomId = 1;
+}
+/*********************************************************约球end*****************************************************************/
+/*******************************************************后台管理消息*******************************************************************/
+/*******************************************************后台管理消息*******************************************************************/
+/*******************************************************后台管理消息*******************************************************************/
+/*******************************************************后台管理消息*******************************************************************/
+/*******************************************************后台管理消息*******************************************************************/
+message AdminLogin_CG
+{
+	string user = 1; //账户
+	string passworld = 2; //密码
+	string vertiCode = 3;//验证码
+}
+message AdminLoginResult_GC
+{
+	int32 errCode = 1; //0登录成功 1登录失败 
+	string errMsg = 2;
+	string name = 3;
+	int32 level = 4;
+	string phone = 5;
+	string account = 6;
+	int32 loginTime = 7;
+}
+/**************************************************************************************************************************************/
+
