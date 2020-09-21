@@ -40,6 +40,7 @@ Router.prototype.push = function push(location) {
 
 //初始化 TiYi
 Vue.prototype.WebInstance = new CWebSocket(axios.defaults.baseWeb)
+Vue.prototype.Account = ""
 
 Vue.config.productionTip = false;
 new Vue({

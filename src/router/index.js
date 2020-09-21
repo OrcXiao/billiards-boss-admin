@@ -64,8 +64,8 @@ router.beforeEach((to, from, next) => {
     //TiYi
     //let info = localStorage.getItem('userLoginLog');
     let bLogin = Vue.prototype.Account != null && Vue.prototype.Account.length !== 0
-    console.log("check has login: ", bLogin)
-    if (!bLogin) {
+    console.log("check has login: ", bLogin, Vue.prototype.Account)
+    if (bLogin) {
       next()
     } else {
       next({
