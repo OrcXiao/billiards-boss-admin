@@ -62,7 +62,9 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           EC_FetchBallGameRooms_CG: 20049,
           EC_FetchBallGameRoomsResult_GC: 20050,
           EC_AdminLogin_CG: 20051,
-          EC_AdminLoginResult_GC: 20052
+          EC_AdminLoginResult_GC: 20052,
+          EC_PostUserMatchNext_CG: 20053,
+          EC_PostUserMatchNextResult_CG: 20054
         }
       },
       HeartCheck_GC: {
@@ -528,6 +530,10 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           updateBy: {
             type: "string",
             id: 11
+          },
+          createTime: {
+            type: "int32",
+            id: 12
           }
         }
       },
@@ -641,6 +647,10 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           imgfour: {
             type: "string",
             id: 12
+          },
+          createTime: {
+            type: "int32",
+            id: 13
           }
         }
       },
@@ -747,10 +757,6 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             type: "string",
             id: 12
           },
-          playTime: {
-            type: "string",
-            id: 13
-          },
           playRoom: {
             type: "string",
             id: 14
@@ -778,6 +784,14 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           playEndTime: {
             type: "string",
             id: 20
+          },
+          playTime: {
+            type: "string",
+            id: 13
+          },
+          drawLotsTime: {
+            type: "string",
+            id: 21
           }
         }
       },
@@ -915,6 +929,10 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           createTime: {
             type: "string",
             id: 11
+          },
+          maxPostIndex: {
+            type: "int32",
+            id: 12
           }
         }
       },
@@ -940,14 +958,9 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             type: "uint32",
             id: 5
           },
-          zuIndex: {
+          maxPostIndex: {
             type: "int32",
             id: 6
-          },
-          lieIndexs: {
-            rule: "repeated",
-            type: "int32",
-            id: 7
           }
         }
       },
@@ -1081,6 +1094,14 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           imgUrl: {
             type: "string",
             id: 5
+          },
+          contestId: {
+            type: "uint32",
+            id: 6
+          },
+          billMoney: {
+            type: "int32",
+            id: 7
           }
         }
       },
@@ -1479,6 +1500,38 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           loginTime: {
             type: "int32",
             id: 7
+          }
+        }
+      },
+      PostUserMatchNext_CG: {
+        fields: {
+          firstUUID: {
+            type: "uint32",
+            id: 1
+          },
+          secondUUID: {
+            type: "uint32",
+            id: 2
+          },
+          winUUID: {
+            type: "uint32",
+            id: 3
+          },
+          contestId: {
+            type: "uint32",
+            id: 4
+          }
+        }
+      },
+      PostUserMatchNextResult_CG: {
+        fields: {
+          errCode: {
+            type: "int32",
+            id: 1
+          },
+          errMsg: {
+            type: "string",
+            id: 2
           }
         }
       }

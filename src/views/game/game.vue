@@ -255,26 +255,23 @@
       :visible.sync="isShowPerformanceDialog"
       @close="Mixin_dialogClose('performance', 'isShowPerformanceDialog')"
       width="1200px">
-      <div class="column-title dis-fl">
-        <div
-          class="column-title-item"
-          v-for="(item, index) in columnNum"
-          :key="item">
-          第{{item}}轮
+      <div class="dis-fl ju-sb">
+        <div class="wd100" v-for="(item, index) in viewArr" :key="index">
+          <span v-if="index+1 !== viewArr.length">第{{index + 1}}轮 :</span>
+          <span v-else>冠军</span>
         </div>
       </div>
-      <div class="show-wrap dis-fl">
-        <div
-          class="column"
-          v-for="(item, index) in columnNum"
-          :key="item">
+      <br>
+      <div class="show-wrap dis-fl" :style="{'height': maxHeight + 'px'}">
+        <div class="column wd100" v-for="(item, index) in viewArr" :key="index">
           <div
-            v-if="itemIn.lieIndex.includes(index)"
-            v-for="(itemIn, indexIn) in testData"
+            v-for="(itemIn, indexIn) in item"
             :key="indexIn"
-            class="column-item"
-            :class="'column' + (index+1)">
-            {{itemIn.name}}
+            :style="{'height': heightValue(item) + 'px'}"
+            class="column-item">
+            <span v-if="itemIn.userName"> {{itemIn.userName}}</span>
+            <i v-if="itemIn.userName" class="el-icon-circle-check cu-pt"></i>
+            <span v-else>/</span>
           </div>
         </div>
       </div>
@@ -289,6 +286,48 @@
 
 <script>
   import EditorBar from '../../components/editor'
+  import Vue from "vue";
+
+  let mockData = [
+    {
+      userName: "A1",
+      drawResult: 1,
+      maxPostIndex: 1
+    }, {
+      userName: "A2",
+      drawResult: 2,
+      maxPostIndex: 1
+    }, {
+      userName: "B1",
+      drawResult: 3,
+      maxPostIndex: 2
+    }, {
+      userName: "B2",
+      drawResult: 4,
+      maxPostIndex: 1
+    }, {
+      userName: "C1",
+      drawResult: 5,
+      maxPostIndex: 1
+    }, {
+      userName: "C2",
+      drawResult: 6,
+      maxPostIndex: 3
+    }, {
+      userName: "D1",
+      drawResult: 7,
+      maxPostIndex: 1
+    }, {
+      userName: "D2",
+      drawResult: 8,
+      maxPostIndex: 2
+    }, {
+      userName: "E2",
+      drawResult: 10,
+      maxPostIndex: 2
+    }
+  ]
+
 
   export default {
     name: "information",
@@ -296,22 +335,18 @@
       let validateFinal8 = (rule, value, callback) => {
         if (!value || !value.length) {
           callback(new Error('请选择8强'));
-        }
-        else if (value.length !== 8) {
+        } else if (value.length !== 8) {
           callback(new Error('请选择8位人员'));
-        }
-        else {
+        } else {
           callback();
         }
       };
       let validateFinal16 = (rule, value, callback) => {
         if (!value || !value.length) {
           callback(new Error('请选择16强'));
-        }
-        else if (value.length !== 16) {
+        } else if (value.length !== 16) {
           callback(new Error('请选择16位人员'));
-        }
-        else {
+        } else {
           callback();
         }
       };
@@ -533,67 +568,86 @@
         /*
         * 比赛报名成绩
         * */
-        //测试数据
-        testData: [
-          {
-            name: 'A',
-            lieIndex: [0, 1, 2]
-          },
-          {
-            name: 'B',
-            lieIndex: [0]
-          },
-          {
-            name: 'C',
-            lieIndex: [0]
-          },
-          {
-            name: 'D',
-            lieIndex: [0, 1,]
-          },
-          {
-            name: 'E',
-            lieIndex: []
-          },
-          {
-            name: 'F',
-            lieIndex: [0]
-          },
-          {
-            name: 'G',
-            lieIndex: [0]
-          },
-          {
-            name: 'H',
-            lieIndex: [0, 1,]
-          },
-        ],
-        //列数
-        columnNum: 0,
-        renderData: {},
+        //视图数组
+        viewArr: [],
+        round: 0,
+        maxHeight: 0,
 
       }
     },
     computed: {
       options: function () {
         return this.$store.state.vx_allCity
+      },
+      heightValue: function () {
+        return function (item) {
+          return this.maxHeight / (item.length)
+        }
       }
     },
     created() {
+      Vue.prototype.WebInstance.On("FetchAllClientEnrollUserResult_GC", res => {
+        let allArr = this.fillArr(res.info);
+        console.log(allArr)
+        let index = 0
+        this.createData(allArr, index, this.viewArr);
+      });
     },
     mounted() {
       this.$nextTick(() => {
         this.initData();
-        this.getColumnNum(this.testData);
-
       })
     },
     methods: {
-      //根据比赛选手, 确定列数
-      getColumnNum(arr) {
-        arr.forEach((item, index) => {
-          this.columnNum = (item.lieIndex.length > this.columnNum ? item.lieIndex.length : this.columnNum);
-        });
+      //填充数组
+      fillArr(arr) {
+        let maxDrawResult = Math.max.apply(Math, arr.map(item => {
+          return item.drawResult
+        }))
+        let lenArr = [8, 16, 32, 64, 128, 256];
+        let maxLen = lenArr.find(item => maxDrawResult <= item);
+        this.maxHeight = maxLen * 40;
+        let dataArr = new Array(maxLen).fill({});
+
+        arr.forEach((item) => {
+          dataArr[item.drawResult - 1] = item;
+        })
+        return dataArr
+      },
+      //生成需要的数据结构
+      createData(dataArr, index, viewArr) {
+        if (index === 0) {
+          this.$set(viewArr, index, dataArr)
+          index++;
+          this.createData(viewArr[index - 1], index, viewArr)
+        } else {
+          let data = [];
+          let len = dataArr.length;
+          for (let i = 0; i < len; i++) {
+            if (i % 2 === 0) {
+              if (Object.keys(dataArr[i]).length && Object.keys(dataArr[i + 1]).length) {
+                if (dataArr[i].maxPostIndex === dataArr[i + 1].maxPostIndex) {
+                  data.push({});
+                } else {
+                  if (dataArr[i].maxPostIndex >= index && (dataArr[i].maxPostIndex > dataArr[i + 1].maxPostIndex)) {
+                    data.push(dataArr[i])
+                  } else if (dataArr[i + 1].maxPostIndex >= index && (dataArr[i].maxPostIndex < dataArr[i + 1].maxPostIndex)) {
+                    data.push(dataArr[i + 1])
+                  } else {
+                    data.push({});
+                  }
+                }
+              } else {
+                data.push({});
+              }
+            }
+          }
+          this.$set(viewArr, index, data)
+          if (data.length > 1) {
+            index++;
+            this.createData(data, index, viewArr)
+          }
+        }
       },
       //获取数据
       initData() {
@@ -618,7 +672,14 @@
       },
       //点击设置比赛成绩
       clickPerformanceBtn(row) {
+        this.viewArr = [];
+
         this.isShowPerformanceDialog = true;
+        let params = {
+          contestId: 10
+        };
+        this.$api.socket.getGameData(params);
+
       },
       //点击新增按钮
       clickAddBtn() {
@@ -754,8 +815,7 @@
                 }
               });
 
-            }
-            else {
+            } else {
               let params = {};
               params.province = this.info.city[0];
               params.city = this.info.city[1];
@@ -816,8 +876,7 @@
             this.ruleList = data;
             if (data.length === 0) {
               this.$message.warning('当前没有参与抽签的人员');
-            }
-            else {
+            } else {
               this.draw.id = row.id;
               data.forEach((item, index) => {
                 if (item.isDraw === '1') {
@@ -886,19 +945,17 @@
   .show-wrap {
     width: 100%;
     overflow-x: auto;
-    & > .column {
-      min-width: 200px;
-      border: 1px solid #EBEEF5;
-      display: flex;
-      flex: 1;
-      flex-direction: column;
 
-      & > .column-item {
+    & > .column {
+
+      .column-item {
         flex: 1;
-        padding: 10px;
+        padding: 0 10px;
+        box-sizing: border-box;
         border: 1px solid #EBEEF5;
         display: flex;
         align-items: center;
+        justify-content: space-between;
       }
     }
   }

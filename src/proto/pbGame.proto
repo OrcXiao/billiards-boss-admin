@@ -1,5 +1,5 @@
-//Version: 1.51
-//Generate Time: Tue Sep  8 21:41:52 2020
+//Version: 1.77
+//Generate Time: Sun Sep 20 20:38:28 2020
 //TiYi: DO NOT EDIT.
 syntax = "proto3";
 package pb;
@@ -61,6 +61,8 @@ enum EC_Code
     EC_FetchBallGameRoomsResult_GC = 20050;
     EC_AdminLogin_CG = 20051;
     EC_AdminLoginResult_GC = 20052;
+    EC_PostUserMatchNext_CG = 20053;
+    EC_PostUserMatchNextResult_CG = 20054;
 }
 //Message Code Generate By TiYi End
 
@@ -230,6 +232,7 @@ message AnnouncementInfo
 	int32 delflag = 9;
 	string createBy = 10;
 	string updateBy = 11;
+	int32 createTime = 12;
 }
 message ClientAnnouncementInfo
 {
@@ -271,6 +274,7 @@ message SignformDetailInfo
 	string imgtwo = 10;
 	string imgthree =11;
 	string imgfour = 12;
+	int32 createTime = 13;
 }
 message ClientSignform
 {
@@ -311,7 +315,6 @@ message ContestDetailInfo
 	string city = 10;
 	string area = 11;
 	string address = 12;
-	string playTime = 13;
 	string playRoom = 14;
 	int32 showflag = 15;
 	int32 delflag = 16;
@@ -319,6 +322,8 @@ message ContestDetailInfo
 	int32 playDays = 18;
 	string playStartTime = 19;
 	string playEndTime =20;
+	string playTime = 13;
+	string drawLotsTime = 21;
 }
 message ClientContestInfo
 {
@@ -366,6 +371,7 @@ message EnrollUserDetailInfo
 	string ranking = 9; //比赛名次
 	int32 money = 10; //比赛奖金
 	string createTime = 11;
+	int32 maxPostIndex = 12;//最大论数  5论 那么就是 2 3 4 都赢了 第5轮输了 最多进军到第5轮了
 }
 message ClientEnrollUserInfo
 {
@@ -374,8 +380,7 @@ message ClientEnrollUserInfo
 	string userName = 3;
 	string createTime = 4;
 	uint32 uuid = 5;
-	int32 zuIndex = 6; //所处的比赛组
-	repeated int32 lieIndexs= 7;
+	int32 maxPostIndex = 6;//最大论数  5论 那么就是 2 3 4 都赢了 第5轮输了 最多进军到第5轮了
 }
 //报名比赛
 message EnrollContest_CG
@@ -423,8 +428,10 @@ message UserMatchRecords
 	string title = 1;
 	string address = 2;
 	string ranking = 3;
-	int32 money = 4;
+	int32 money = 4; //比赛奖金获得
 	string imgUrl = 5;
+	uint32 contestId = 6;
+	int32 billMoney = 7;//报名费
 }
 message FetchUserMatchRecords_CG
 {
@@ -591,6 +598,20 @@ message AdminLoginResult_GC
 	string phone = 5;
 	string account = 6;
 	int32 loginTime = 7;
+}
+//提交比赛对战的两人谁赢谁输
+message PostUserMatchNext_CG
+{
+	uint32 firstUUID = 1;
+	uint32 secondUUID = 2;
+	uint32 winUUID = 3;
+	uint32 contestId = 4;
+}
+//成功了就会返回 
+message PostUserMatchNextResult_CG
+{	
+	int32 errCode = 1;//0成功
+	string errMsg = 2;
 }
 /**************************************************************************************************************************************/
 

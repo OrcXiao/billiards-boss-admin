@@ -169,10 +169,17 @@ const api = {
   //TiYi
   //WebSocket
   socket: {
+    //登录
     login(params) {
       Vue.prototype.WebInstance.SendMsg("AdminLogin_CG", params)
+    },
+    //获取比赛数据
+    getGameData(params){
+      Vue.prototype.WebInstance.SendMsg("FetchAllClientEnrollUser_CG", params)
     }
-  }
+  },
+  //获取比赛数据
+
 
 };
 
