@@ -673,10 +673,9 @@
       //点击设置比赛成绩
       clickPerformanceBtn(row) {
         this.viewArr = [];
-
         this.isShowPerformanceDialog = true;
         let params = {
-          contestId: 10
+          contestId: row.id
         };
         this.$api.socket.getGameData(params);
 
